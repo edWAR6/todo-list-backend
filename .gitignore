@@ -1,4 +1,6 @@
 backend/api/node_modules
+backend/mongoDB/node_modules
+backend/postgreSQL/node_modules
 
 database/mongoDB/*
 !database/mongoDB/.gitkeep
