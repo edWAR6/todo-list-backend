@@ -3,12 +3,20 @@ services:
   api:
     build: ./backend/api
     container_name: api
+    ports:
+      - '3000:8080'
 
-  # backend-mongodb:
-    # container_name: backend_mongodb
+  logic-mongodb:
+    build: ./backend/mongoDB
+    container_name: logic_mongodb
+    ports:
+      - '3001:8080'
 
-  # backend-postgresql:
-    # container_name: backend_postgresql
+  logic-postgresql:
+    build: ./backend/postgreSQL
+    container_name: logic_postgresql
+    ports:
+      - '3002:8080'
 
   mongodb:
     image: mongo
