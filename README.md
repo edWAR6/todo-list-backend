@@ -26,8 +26,8 @@ To build your image run:
 
 ```bash
 cd backend
-cd express
-docker build . -t todos_backend_express
+cd api
+docker build . -t todos_api
 ```
 
 To list your images and make sure the new one is there, run:
@@ -41,7 +41,7 @@ docker images
 To execute your container run:
 
 ```bash
-docker run -p 4000:8080 -d --name todos_backend todos_backend_express
+docker run -p 4000:8080 -d --name todos_api todos_api
 ```
 
 To see the name, id, status, etc, of your container run:

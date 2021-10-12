@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  api:
+    build: ./backend/api
+    container_name: api
+
+  # backend-mongodb:
+    # container_name: backend_mongodb
+
+  # backend-postgresql:
+    # container_name: backend_postgresql
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+    volumes:
+      - ./database/mongoDB:/data/db
+    ports:
+      - 27017:27017
+    restart: always
+
+  postgresql:
+    image: postgres
+    container_name: postgresql
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./database/postgreSQL:/var/lib/postgresql/data
+    ports:
+      - '5438:5432'
+    restart: always
