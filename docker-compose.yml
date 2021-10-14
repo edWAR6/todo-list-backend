@@ -1,29 +1,17 @@
 version: "3.9"
 services:
   api:
-    build: ./backend/api
+    build: ./backend
     container_name: api
     ports:
       - '3000:8080'
-
-  # logic-mongodb:
-  #   build: ./backend/mongoDB
-  #   container_name: logic_mongodb
-  #   ports:
-  #     - '3001:8080'
-
-  # logic-postgresql:
-  #   build: ./backend/postgreSQL
-  #   container_name: logic_postgresql
-  #   ports:
-  #     - '3002:8080'
 
   mongodb:
     image: mongo
     container_name: mongodb
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=example
+      - MONGO_INITDB_ROOT_USERNAME=usrtodos
+      - MONGO_INITDB_ROOT_PASSWORD=pwdtodos
     volumes:
       - ./database/mongoDB:/data/db
     ports:
@@ -34,10 +22,12 @@ services:
     image: postgres
     container_name: postgresql
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=usrtodos
+      - POSTGRES_PASSWORD=pwdtodos
+      - POSTGRES_DB=todos
     volumes:
       - ./database/postgreSQL:/var/lib/postgresql/data
+      - ./database/postgreSQL/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
     ports:
-      - '5438:5432'
+      - '5432:5432'
     restart: always

@@ -1,5 +1,8 @@
+import { ID } from "../types";
+
 interface IItem {
-  id?: any;
+  id?: ID;
+  listId: ID;
   description: string;
   checked: boolean;
 }

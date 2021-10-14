@@ -1,0 +1,9 @@
+api/node_modules
+api/build
+mongoDB/node_modules
+mongoDB/build
+postgreSQL/node_modules
+postgreSQL/build
+common/node_modules
+common/build
+npm-debug.log

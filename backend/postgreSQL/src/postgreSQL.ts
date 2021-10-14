@@ -1,12 +1,15 @@
 import { Pool, PoolClient } from'pg';
 import * as dotenv from 'dotenv';
-import { IDatabase } from "../../common";
+import { IDatabase, ItemService, ListService, ServiceFactory } from "../../common";
+import { PostgreSQLListService } from './list/list.service';
+import { PostgreSQLItemService } from './item/item.service';
 
-class PostgreSQL implements IDatabase {
+class PostgreSQL extends ServiceFactory implements IDatabase {
   client: Pool;
   database: PoolClient | undefined;
 
   constructor(){
+    super();
     dotenv.config();
     this.client = new Pool({
       host: process.env.HOST,
@@ -22,7 +25,14 @@ class PostgreSQL implements IDatabase {
   }
 
   async disconnect(): Promise<void> {
-    await this.database?.release(true);
+    await this.client?.end();
+  }
+
+  public getListService(): ListService | undefined {
+    return this.database ? new PostgreSQLListService(this.database) : undefined;
+  }
+  public getItemService(): ItemService | undefined {
+    return this.database ? new PostgreSQLItemService(this.database) : undefined;
   }
 }
 

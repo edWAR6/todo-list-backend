@@ -1,7 +1,8 @@
 import { IItem } from "../item/item.interface";
+import { ID } from "../types";
 
 interface IList {
-  id?: any;
+  id?: ID;
   name: string;
   items?: IItem[];
 }

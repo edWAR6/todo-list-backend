@@ -14,5 +14,6 @@ database/mongoDB/*
 !database/mongoDB/.gitkeep
 database/postgreSQL/*
 !database/postgreSQL/.gitkeep
+!database/postgreSQL/create_tables.sql
 
 .DS_Store

@@ -2,6 +2,9 @@ import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from "cors";
 import helmet from "helmet";
+import { listRouter } from './list/list.router';
+import { itemRouter } from './item/item.router';
+import { getDatabase } from './database';
 
 dotenv.config();
 
@@ -19,8 +22,13 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('Well done!');
+  res.send('👋 Welcome to the API!');
 });
+
+app.use(getDatabase);
+
+app.use("/api/lists", listRouter);
+app.use("/api/lists/:id/items", itemRouter);
 
 app.listen(PORT, () => {
   console.log(`✅ The server is up and running on port ${PORT}`);
