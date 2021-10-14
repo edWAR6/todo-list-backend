@@ -6,17 +6,17 @@ services:
     ports:
       - '3000:8080'
 
-  logic-mongodb:
-    build: ./backend/mongoDB
-    container_name: logic_mongodb
-    ports:
-      - '3001:8080'
+  # logic-mongodb:
+  #   build: ./backend/mongoDB
+  #   container_name: logic_mongodb
+  #   ports:
+  #     - '3001:8080'
 
-  logic-postgresql:
-    build: ./backend/postgreSQL
-    container_name: logic_postgresql
-    ports:
-      - '3002:8080'
+  # logic-postgresql:
+  #   build: ./backend/postgreSQL
+  #   container_name: logic_postgresql
+  #   ports:
+  #     - '3002:8080'
 
   mongodb:
     image: mongo
