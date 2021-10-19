@@ -2,12 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import { IDatabase, ServiceFactory } from '../../common';
 import { MongoDB } from '../../mongoDB';
 import { PostgreSQL } from '../../postgreSQL';
+import * as dotenv from 'dotenv';
 
 let database: IDatabase | undefined;
 
 const getDatabase = async (_: Request, res: Response, next: NextFunction) => {
   if (process.env.ACTIVE_DATABASE) {
-    const database = await initializeDatabase(process.env.ACTIVE_DATABASE);
+    await initializeDatabase(process.env.ACTIVE_DATABASE);
     if (database) {
       res.locals.listService = (database as ServiceFactory).getListService();
       res.locals.itemService = (database as ServiceFactory).getItemService();
@@ -22,14 +23,17 @@ const getDatabase = async (_: Request, res: Response, next: NextFunction) => {
   }
 }
 
-const initializeDatabase = async (name: string): Promise<IDatabase | undefined> => {
-  if (process.env.ACTIVE_DATABASE === 'MongoDB') {
+const initializeDatabase = async (name: string): Promise<void> => {
+  dotenv.config();
+  if (process.env.ACTIVE_DATABASE === 'MongoDB' && (database === undefined  || database.constructor.name !== MongoDB.name)) {
+    database?.disconnect();
     database = new MongoDB();
-  } else if (process.env.ACTIVE_DATABASE === 'PostgreSQL') {
+    await database?.connect();
+  } else if (process.env.ACTIVE_DATABASE === 'PostgreSQL' && (database === undefined  || database.constructor.name !== PostgreSQL.name)) {
+    database?.disconnect();
     database = new PostgreSQL();
+    await database?.connect();
   }
-  await database?.connect();
-  return database;
 }
 
 export {
