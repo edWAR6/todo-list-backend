@@ -10,10 +10,7 @@ backend/postgreSQL/build
 backend/common/node_modules
 backend/common/build
 
-database/mongoDB/*
-!database/mongoDB/.gitkeep
-database/postgreSQL/*
-!database/postgreSQL/.gitkeep
-!database/postgreSQL/create_tables.sql
+database/mongoDB/mdbdata/*
+database/postgreSQL/pgdata/*
 
 .DS_Store

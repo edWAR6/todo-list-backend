@@ -12,8 +12,10 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=usrtodos
       - MONGO_INITDB_ROOT_PASSWORD=pwdtodos
+      - MONGO_INITDB_DATABASE=todos
     volumes:
-      - ./database/mongoDB:/data/db
+      - ./database/mongoDB/mdbdata:/data/db
+      - ./database/mongoDB/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
     ports:
       - 27017:27017
     restart: always
@@ -26,7 +28,7 @@ services:
       - POSTGRES_PASSWORD=pwdtodos
       - POSTGRES_DB=todos
     volumes:
-      - ./database/postgreSQL:/var/lib/postgresql/data
+      - ./database/postgreSQL/pgdata:/var/lib/postgresql/data
       - ./database/postgreSQL/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
     ports:
       - '5432:5432'

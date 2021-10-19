@@ -6,13 +6,13 @@ class PostgreSQLListService implements ListService {
   constructor(private database: PoolClient){}
 
   async createList(list: IList): Promise<IList> {
-    const query = `INSERT INTO list (name) VALUES ($1)`;
+    const query = `INSERT INTO list (name) VALUES ($1) RETURNING _id as id, name`;
     const result = await this.database.query(query, [list.name]);
     return result.rows[0] as IList;
   }
 
   async getLists(): Promise<IList[]> {
-    const query = `SELECT * FROM item ORDER BY _id ASC`;
+    const query = `SELECT * FROM list ORDER BY _id ASC`;
     const lists = (await this.database.query(query)).rows as IList[];
     return lists;
   }
@@ -30,7 +30,7 @@ class PostgreSQLListService implements ListService {
   }
 
   async changeListName(id: ID, name: string): Promise<IList> {
-    const query = `UPDATE list SET name = $1 WHERE _id = $2`;
+    const query = `UPDATE list SET name = $1 WHERE _id = $2 RETURNING _id as id, name`;
     const result = await this.database.query(query, [name, id]);
     return result.rows[0] as IList;
   }

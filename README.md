@@ -26,7 +26,6 @@ To build your image run:
 
 ```bash
 cd backend
-cd api
 docker build . -t todos_api
 ```
 
@@ -41,7 +40,7 @@ docker images
 To execute your container run:
 
 ```bash
-docker run -p 4000:8080 -d --name todos_api todos_api
+docker run -p 3000:8080 -d --name api todos_api
 ```
 
 To see the name, id, status, etc, of your container run:

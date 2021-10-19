@@ -11,10 +11,13 @@ class PostgreSQL extends ServiceFactory implements IDatabase {
   constructor(){
     super();
     dotenv.config();
+    
     this.client = new Pool({
-      host: process.env.HOST,
-      user: process.env.USER,
+      host: process.env.DATABASE_HOST,
+      user: process.env.DATABASE_USER,
       max: 20,
+      database: process.env.DATABASE_NAME,
+      password: process.env.DATABASE_PASSWORD,
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 2000
     });
@@ -22,6 +25,7 @@ class PostgreSQL extends ServiceFactory implements IDatabase {
 
   async connect(): Promise<void> {
     this.database = await this.client.connect();
+    console.log('🐘 PostgreSQL connected.');
   }
 
   async disconnect(): Promise<void> {

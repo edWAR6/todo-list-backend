@@ -13,4 +13,4 @@ WORKDIR /usr/src/backend/api
 RUN npm install
 RUN npm run build
 EXPOSE 8080
-CMD ["node", "build/server"]
+CMD ["npm", "start"]

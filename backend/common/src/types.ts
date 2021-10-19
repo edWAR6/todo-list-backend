@@ -1,4 +1,4 @@
-type ID = number | string | object;
+type ID = number | string;
 
 export {
   ID

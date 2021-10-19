@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 app.use(getDatabase);
 
 app.use("/api/lists", listRouter);
-app.use("/api/lists/:id/items", itemRouter);
+app.use("/api/lists/:listId/items", itemRouter);
 
 app.listen(PORT, () => {
   console.log(`✅ The server is up and running on port ${PORT}`);

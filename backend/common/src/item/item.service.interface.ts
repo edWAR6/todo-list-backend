@@ -2,7 +2,7 @@ import { ID } from "../types";
 import { IItem } from "./item.interface";
 
 interface ItemService {
-  createItem: (item: IItem) => Promise<IItem>;
+  createItem: (listId: ID, item: IItem) => Promise<IItem>;
   getItems: (listId: ID) => Promise<IItem[]>;
   getItem: (listId: ID, id: ID) => Promise<IItem>;
   deleteItem: (listId: ID, id: ID) => Promise<boolean>;

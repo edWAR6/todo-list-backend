@@ -16,12 +16,14 @@ class MongoDB extends ServiceFactory implements IDatabase {
   constructor() {
     super();
     dotenv.config();
-    this.client = new mongoDB.MongoClient(process.env.CONNECTION_STRING!);
+    
+    this.client = new mongoDB.MongoClient(`mongodb://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_HOST}:27017`);
   }
 
   async connect(): Promise<void> {
     await this.client.connect();
-    this.database = this.client.db(process.env.DB_NAME);
+    this.database = this.client.db(process.env.DATABASE_NAME);
+    console.log('🐵 MongoDB connected.');
   }
 
   async disconnect(): Promise<void> {
@@ -34,7 +36,7 @@ class MongoDB extends ServiceFactory implements IDatabase {
   }
 
   public getItemService(): ItemService | undefined {
-    collections.lists = this.database?.collection('items');
+    collections.items = this.database?.collection('items');
     return collections.items ? new MongoDBItemService(collections.items) : undefined;
   }
 }

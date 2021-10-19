@@ -1,4 +1,4 @@
-import { Collection } from 'mongodb';
+import { Collection, ObjectId } from 'mongodb';
 import { ID, IList, ListService } from "../../../common";
 
 class MongoDBListService implements ListService {
@@ -7,7 +7,7 @@ class MongoDBListService implements ListService {
 
   async createList(list: IList): Promise<IList> {
     const inserted = await this.collection.insertOne(list);
-    const result = await this.getList(inserted.insertedId);
+    const result = await this.getList(inserted.insertedId.toString());
     return result;
   }
 
@@ -17,20 +17,22 @@ class MongoDBListService implements ListService {
   }
 
   async getList(id: ID): Promise<IList> {
-    const query = { _id: id };
+    console.log(id);
+    
+    const query = { _id: new ObjectId(id) };
     const list = (await this.collection.findOne(query)) as IList;
     return list;
   }
 
   async deleteList(id: ID): Promise<boolean> {
-    const query = { _id: id };
+    const query = { _id: new ObjectId(id) };
     const result = await this.collection.deleteOne(query);
     return (result && result.deletedCount > 0);
   }
 
   async changeListName(id: ID, name: string): Promise<IList> {
-    const query = { _id: id };
-    await this.collection.updateOne(query, { $set: { $set: { name } } });
+    const query = { _id: new ObjectId(id) };
+    await this.collection.updateOne(query, { $set: { name } });
     const list = await this.getList(id);
     return list;
   }
